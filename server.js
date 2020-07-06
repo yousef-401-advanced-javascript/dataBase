@@ -18,13 +18,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-  app.get('/', (req,res)=> res.send('hello'))
-  
-  app.get('/todo',async (req, res) => {
+app
+  .route('/todo')
+  .get(async (req, res) => {
     let record = await schema.find({});
     res.json(record);
   })
-  app.post('/todo',async (req, res) => {
+  .post(async (req, res) => {
     try {
       let record = new schema(req.body);
       let save = await record.save();
@@ -34,16 +34,16 @@ app.use(cors());
       console.log(e.message);
     }
   })
-  app.put('/todo/:id',async (req, res) => {
-    let _id = req.params;
+  .put(async (req, res) => {
+    let _id = req.body;
     let record = await schema.findByIdAndUpdate(_id, req.body, {
       new: true,
     });
     res.json(record);
   })
-  app.delete('/todo/:id',async (req, res) => {
-    let _id = req.params;
-    let record = await schema.findByIdAndDelete(_id);
+  .delete(async (req, res) => {
+    let _id = req.body;
+    let record = await schema.findByIdAndDelete(req.body._id);
     res.json(record);
   });
 // app.use('*', notFound);
