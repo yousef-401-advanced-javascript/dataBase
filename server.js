@@ -43,7 +43,7 @@ app.use(cors());
   })
   app.delete('/todo/:id',async (req, res) => {
     let _id = req.params;
-    let record = await schema.findByIdAndDelete(req.body._id);
+    let record = await schema.findByIdAndDelete(_id);
     res.json(record);
   });
 // app.use('*', notFound);
