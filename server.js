@@ -44,7 +44,7 @@ app
   })
   .delete(async (req, res) => {
     let _id = req.body;
-    let record = await schema.findByIdAndDelete(req.body._id);
+    let record = await schema.findByIdAndDelete(req.headers.bo);
     res.json(record);
   });
 // app.use('*', notFound);
