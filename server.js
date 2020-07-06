@@ -2,21 +2,21 @@
 require('dotenv').config();
 const express = require('express');
 const PORT = process.env.PORT || 3000;
-const notFound = require('./not-found.js');
+// const notFound = require('./not-found.js');
 const mongoose = require('mongoose');
-const schema = require('./DB.js');
+const schema = require('./database.js');
 const cors = require('cors')
-app.use(cors());
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/todo';
 mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
 });
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app
   .route('/todo')
@@ -46,6 +46,6 @@ app
     let record = await schema.findByIdAndDelete(req.body._id);
     res.json(record);
   });
-app.use('*', notFound);
+// app.use('*', notFound);
 
 app.listen(PORT, () => console.log(`Hearing from port -> ${PORT}`));
