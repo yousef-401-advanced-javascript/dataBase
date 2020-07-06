@@ -36,7 +36,8 @@ app
   })
   .put(async (req, res) => {
     let _id = req.body;
-    let record = await schema.findByIdAndUpdate(_id, req.body, {
+    console.log(_id)
+    let record = await schema.findByIdAndUpdate(_id.id, req.body, {
       new: true,
     });
     res.json(record);
