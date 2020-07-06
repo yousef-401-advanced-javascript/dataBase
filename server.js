@@ -17,14 +17,14 @@ mongoose.connect(MONGODB_URI, {
 const app = express();
 app.use(express.json());
 app.use(cors());
+let route = express.Router()
 
-app
-  .route('/todo')
-  .get(async (req, res) => {
+  
+  route.get('/todo',async (req, res) => {
     let record = await schema.find({});
     res.json(record);
   })
-  .post(async (req, res) => {
+  route.post('/todo',async (req, res) => {
     try {
       let record = new schema(req.body);
       let save = await record.save();
@@ -34,15 +34,15 @@ app
       console.log(e.message);
     }
   })
-  .put(async (req, res) => {
-    let _id = req.body;
+  route.put('/todo/:id',async (req, res) => {
+    let _id = req.params;
     let record = await schema.findByIdAndUpdate(_id, req.body, {
       new: true,
     });
     res.json(record);
   })
-  .delete(async (req, res) => {
-    let _id = req.body;
+  route.delete('/todo/:id',async (req, res) => {
+    let _id = req.params;
     let record = await schema.findByIdAndDelete(req.body._id);
     res.json(record);
   });
