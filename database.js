@@ -6,6 +6,7 @@ const Todo = new Schema({
   assignee: { type: String },
   difficulty: { type: Number, default: 1 },
   complete: { type: Boolean, default: false },
+  due:{type: String},
 });
 
 module.exports = model('todo', Todo);
